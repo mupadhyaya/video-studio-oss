@@ -12,9 +12,12 @@ You provide a syllabus (`curriculum.txt`), and the engine drafts engaging script
 - `ffmpeg` installed on your system (`brew install ffmpeg` or `apt-get install ffmpeg`)
 
 ### 2. Installation
+We highly recommend using a virtual environment for development:
 ```bash
 git clone https://github.com/mupadhyaya/video-studio-oss.git
 cd video-studio-oss
+python3 -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 pip install -r requirements.txt
 ```
 
@@ -52,4 +55,27 @@ If you provided a `YOUTUBE_OAUTH_TOKEN`, it will automatically upload the videos
 
 ## 🤖 Automating with GitHub Actions
 Check out the `examples/github_action_template.yml` file to see how you can set this up to run automatically on a cron schedule!
-Open Source Video Capability
+
+## 🤝 Contributing
+
+We welcome contributions! Whether it's adding new animations, integrating alternative LLMs, or fixing bugs, feel free to raise a Pull Request.
+
+### Developer Setup & PR Checks
+When you raise a PR, our GitHub Actions CI will automatically review your code for syntax, security, and vulnerabilities. To ensure your PR passes, please run these checks locally before pushing:
+
+1. **Install dev dependencies:** 
+   ```bash
+   pip install flake8 bandit safety
+   ```
+2. **Run Linting (Flake8):** Checks for syntax errors and undefined names.
+   ```bash
+   flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+   ```
+3. **Run Security Analysis (Bandit):** Checks for common security issues.
+   ```bash
+   bandit -r . -ll -ii
+   ```
+4. **Run Dependency Check (Safety):** Verifies no known vulnerabilities exist in dependencies.
+   ```bash
+   safety check -r requirements.txt
+   ```
