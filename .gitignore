@@ -216,3 +216,24 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local tooling
+.local-auth/
+
+# Local UI/Dev files
+.DS_Store
+align_ui.html
+assets/align_ui.html
+
+# Local Test & Debug Scripts/Outputs
+test_*.py
+check_*.py
+patch_*.py
+align_*.py
+user_align.py
+# We want to track final rendered videos, but ignore intermediate temp files
+*TEMP_MPY*.mp4
+temp_build_*/
+base.png
+content.png
+test_mermaid.png
