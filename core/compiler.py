@@ -89,13 +89,20 @@ def compile_video(slides_data, images_dir, audio_dir, output_path):
             # Create composite slide video clip
             base_clip = ImageClip(img_base_path).with_duration(duration)
             
-            # Fade in content at 1.5 seconds (or early if duration is short)
+            # Fade and slide in content at 1.5 seconds (or early if duration is short)
             fade_start = min(1.5, duration / 3.0)
             content_duration = max(0.1, duration - fade_start)
+            
+            # Simple slide up animation (from y=50 to y=0 over 0.5s)
+            def slide_up(t):
+                if t < 0.5:
+                    return (0, int(50 * (1 - (t / 0.5))))
+                return (0, 0)
             
             content_clip = (ImageClip(img_content_path)
                             .with_start(fade_start)
                             .with_duration(content_duration)
+                            .with_position(slide_up)
                             .with_effects([CrossFadeIn(1.0)]))
                             
             composite_layers = [base_clip, content_clip]
@@ -175,7 +182,17 @@ def compile_video(slides_data, images_dir, audio_dir, output_path):
                 vw, vh = base_clip.size
                 ax = vw - target_w - 40
                 ay = vh - 350 - 40
-                avatar_clip = ImageSequenceClip(avatar_frames, fps=fps).with_position((ax, ay)).with_duration(duration)
+                
+                # Avatar slides in from the right over 1 second
+                def avatar_slide_in(t):
+                    if t < 1.0:
+                        # Ease out cubic (optional) or just linear
+                        # Linear slide from `vw` to `ax`
+                        current_x = vw - ((vw - ax) * t)
+                        return (int(current_x), ay)
+                    return (ax, ay)
+                    
+                avatar_clip = ImageSequenceClip(avatar_frames, fps=fps).with_position(avatar_slide_in).with_duration(duration)
                 composite_layers.append(avatar_clip)
                 
             slide_clip = CompositeVideoClip(composite_layers).with_duration(duration).with_audio(audio_clip)

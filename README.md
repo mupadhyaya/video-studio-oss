@@ -1,7 +1,10 @@
 # 🎥 Video Studio OSS
 
-Video Studio OSS is a fully automated AI video generation pipeline. You provide a syllabus (`curriculum.txt`), and the engine uses Gemini to draft engaging scripts, generates visuals via Pillow/MoviePy, creates voiceovers using Edge-TTS, and composites it all together into a final MP4 video. It even automatically uploads the resulting videos to YouTube!
+Video Studio OSS is a fully automated AI video generation pipeline, designed as a flexible playground for creators to generate engaging YouTube videos, experiment, and customize the workflow to their convenience. 
 
+You provide a syllabus (`curriculum.txt`), and the engine drafts engaging scripts, generates presentation slide visuals via Pillow/MoviePy (with dynamic animations!), creates voiceovers using Edge-TTS, and composites it all together into a final MP4 video. 
+
+**Model Flexibility**: While the default pipeline uses the Gemini API, you can easily swap this out to use the new `google-genai` CLI or any other alternative LLM to generate the script JSON files, depending on your setup and version availability.
 ## 🚀 Getting Started
 
 ### 1. Prerequisites
