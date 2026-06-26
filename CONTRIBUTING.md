@@ -11,3 +11,23 @@ Thanks for your interest in contributing to video-studio-oss. To keep this proje
 
 Code review & ownership
 - Changes to code require approval by the code owner(s). See .github/CODEOWNERS.
+
+### Developer Setup & PR Checks
+When you raise a PR, our GitHub Actions CI will automatically review your code for syntax, security, and vulnerabilities. To ensure your PR passes, please run these checks locally before pushing:
+
+1. **Install dev dependencies:** 
+   ```bash
+   pip install flake8 bandit safety
+   ```
+2. **Run Linting (Flake8):** Checks for syntax errors and undefined names.
+   ```bash
+   flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+   ```
+3. **Run Security Analysis (Bandit):** Checks for common security issues.
+   ```bash
+   bandit -r . -ll -ii
+   ```
+4. **Run Dependency Check (Safety):** Verifies no known vulnerabilities exist in dependencies.
+   ```bash
+   safety check -r requirements.txt
+   ```

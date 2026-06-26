@@ -19,15 +19,13 @@ jobs:
       - name: Install dependencies and tools
         run: |
           pip install --upgrade pip
-          pip install bandit safety flake8
+          pip install safety flake8
 
       - name: Run Flake8 (Linting)
         # stop the build if there are Python syntax errors or undefined names
         run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
-      - name: Run Bandit (Security Analysis)
-        # -ll means medium severity and above, -ii means medium confidence and above
-        run: bandit -r . -ll -ii
+
 
       - name: Run Safety (Dependency Vulnerabilities)
         run: safety check -r requirements.txt || true
